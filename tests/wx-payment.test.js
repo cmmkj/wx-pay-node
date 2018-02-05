@@ -1,7 +1,18 @@
 var wxPayment = require('../lib/wx-payment');
+let utils = require('../lib/utils')
 var expect = require('chai').expect;
 var fs = require('fs');
 
+const params = {
+  app_id: '2016080700188285',
+  version: '1.0',
+  nonce_str: 'fdsfs',
+  mch_id: '2016080700188285',
+  notify_url: 'https://entrust.com/notify_url',
+  sign: 'vSfAQzbLxHrhyZ48wOJXTsD4FPnt+YGdK57+fP1BCbf9rIVycfjhYCqlFh' 
+}
+
+const formattedParams = 'app_id=2016080700188285&notify_url=https%3A%2F%2Fentrust.com%2Fnotify_url&mch_id=2016080700188285&nonce_str=fdsfs&sign=vSfAQzbLxHrhyZ48wOJXTsD4FPnt+YGdK57+fP1BCbf9rIVycfjhYCqlFh&version=1.0'
 describe('Wechat payment 测试', function() {
 
     describe('wxPayment.init', function() {
@@ -51,5 +62,11 @@ describe('Wechat payment 测试', function() {
             });
         });
     });
+
+    describe('#formatter', function () {
+      it('should get the exact sign string', function () {
+        expect(utils.formatter(params, true)).to.be.equal(formattedParams)
+      })
+    })
 
 });
